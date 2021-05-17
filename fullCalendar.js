@@ -21,7 +21,10 @@ function makeCalendar(start){
     alert('2019년도까지만 존재합니다');
     return;
   }
-  
+  if(start>12){
+    alert('2021년도까지만 존재합니다');
+    return;
+  }
   let date = new Date();
   let month = start;
   date.setFullYear(`${setYear}`,`${month-1}`,1);
@@ -63,7 +66,7 @@ function makeCalendar(start){
 }
 
 function reset(){
-  if(start < -23){
+  if(start < -23 || start > 12){
     return;
   }
   for(let index of calendarIndex){
