@@ -57,12 +57,14 @@ body{
 #calendar tr *{
   width : 84px;
   vertical-align: middle;
-  background-color : rgb(255, 205, 205);
+  background-color : rgb(255, 214, 214);
   font-size : 23px;
 }
 
-.day{
+#calendar tr th{
+  width : 84px;
   color : rgb(255, 255, 255);
+  text-shadow: 1px 1px 7px rgb(177, 61, 61);
 }
 #calendar td{
   font-family: 'Noto Sans KR', sans-serif;
