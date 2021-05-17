@@ -9,13 +9,17 @@ const year = document.querySelector("#year");
 let setYear = 2021;
 
 function makeCalendar(start){
-  if(start <= 0){
-    if(start < -11){
-      alert('2020년도까지만 존재합니다.');
-      return;
+  if(-24 < start && start <= 0){
+    if(start > -12){
+      start += 12;
+      setYear = 2020;
+    } else if(start <= -12){
+      start +=24;
+      setYear = 2019;
     }
-    start += 12;
-    setYear = 2020;
+  } else if(start <= -24){
+    alert('2019년도까지만 존재합니다');
+    return;
   }
   
   let date = new Date();
@@ -59,7 +63,7 @@ function makeCalendar(start){
 }
 
 function reset(){
-  if(start < -11){
+  if(start < -23){
     return;
   }
   for(let index of calendarIndex){
