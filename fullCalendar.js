@@ -4,11 +4,24 @@ const thirtyMonth = [2,4,6,9,11];
 const thirtyArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
 const thirtyOneArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31];
 const nextMonthBtns = document.querySelector("#nextMonth");
+const previousMonthBtns = document.querySelector("#previousMonth");
+const year = document.querySelector("#year");
+let setYear = 2021;
 
 function makeCalendar(start){
+  if(start <= 0){
+    if(start < -11){
+      alert('2020년도까지만 존재합니다.');
+      return;
+    }
+    start += 12;
+    setYear = 2020;
+  }
+  
   let date = new Date();
   let month = start;
-  date.setFullYear(2021,`${month-1}`,1);
+  date.setFullYear(`${setYear}`,`${month-1}`,1);
+  year.textContent = `${setYear}년`;
   let firstDay = date.getDay();
 
   function changeMonth(){
@@ -46,12 +59,16 @@ function makeCalendar(start){
 }
 
 function reset(){
+  if(start < -11){
+    return;
+  }
   for(let index of calendarIndex){
     index.textContent="";
   }
 }
 
-let start= 1;
+let start= 5;
 makeCalendar(start);
 
-nextMonthBtns.addEventListener('click',()=>{start++; reset(); makeCalendar(start)})
+nextMonthBtns.addEventListener('click',()=>{start++; reset(); makeCalendar(start)});
+previousMonthBtns.addEventListener('click',()=>{start--; reset(); makeCalendar(start)})
