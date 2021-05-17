@@ -90,6 +90,14 @@ function makeCalendar(startMonth){
     }
   }
   //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+  //다음달의 첫 요일을 구하는 함수
+  function nextMonth(){
+    const nextMonthFirstDay = whatIsFirstDay()+2;
+    nextMonthFirstDay>6?nextMonthFirstDay-=7:nextMonthFirstDay;
+    isItThirty===false?nextMonthFirstDay++:nextMonthFirstDay;
+    return nextMonthFirstDay;
+  }
+  //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
   showYear(); //연도표시
   showMonth(); //월표시
   thiryDaytoggler(); //30일인 달인지 구함
