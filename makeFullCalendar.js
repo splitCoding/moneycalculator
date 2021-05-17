@@ -1,18 +1,25 @@
 const jsCalendar = document.querySelector(".js-calendar");
 const calendarIndex = jsCalendar.querySelectorAll('td');
-const thirtyMonth = [2,4,6,9,11];
-const thirtyArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
-const thirtyOneArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31];
+const month = document.querySelector('#month');
+const year = document.querySelector("#year");
 const nextMonthBtns = document.querySelector("#nextMonth");
 const previousMonthBtns = document.querySelector("#previousMonth");
-const year = document.querySelector("#year");
+
+const thirtyMonth = [4,6,9,11];
+const thirtyArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
+const thirtyOneArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31];
+
 const today = new Date();
 let setYear = today.getFullYear();
 let startMonth= today.getMonth()+1;
 
-function makeCalendar(startMonth){
+//달력을 만드는 함수
+function makeCalendar(){
+  let date = new Date();
+  date.setFullYear(`${setYear}`,`${startMonth-1}`,1);
+  let firstDay = date.getDay();
 
-  //2019에서 2021년도까지 표현할 수 있게 그 이상은 alert
+  //달력이 2020에서 2022년도까지만 표현가능하게
   if(-12 < startMonth && startMonth <= 24){
     if(-12 < startMonth && startMonth <= 0){
       startMonth += 12;
@@ -28,22 +35,21 @@ function makeCalendar(startMonth){
     alert('2022년도까지만 존재합니다');
     return;
   }
-
-
-  function putMonth(){
-    const monthArea = document.querySelector('#month');
-    monthArea.textContent = `${startMonth}월`;
+  //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+  //year를 표시해주는 함수
+  function showYear(){
+    year.textContent = `${setYear}년`;
   }
-
-  let date = new Date();
-  date.setFullYear(`${setYear}`,`${startMonth-1}`,1);
-  year.textContent = `${setYear}년`;
-  let firstDay = date.getDay();
-
-  
+  //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+  //month를 표시해주는 함수
+  function showMonth(){
+    month.textContent = `${startMonth}월`;
+  }
+  //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+  //30일로 된 month인지 알아내는 함수
   let isItThirty = false;
 
-  function thiryDaytoggle(){
+  function thirtyDaytoggler(){
     if(thirtyMonth.includes(startMonth)){
       isItThirty = true;
       console.log(isItThirty);
@@ -52,22 +58,31 @@ function makeCalendar(startMonth){
       console.log(isItThirty);
     }
   }
-
+  //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+  //30일로 된 month인지 알아내는 함수 (2월은 28일)
   function fillDays(){
     if(isItThirty===true){
       for(let i =0;i<thirtyArray.length;i++){
         calendarIndex[firstDay+i].textContent = thirtyArray[i];
       }
     } else {
-      for(let i =0;i<thirtyOneArray.length;i++){
-        calendarIndex[firstDay+i].textContent = thirtyOneArray[i];
+      if(startMonth === 2){
+        for(let i =0;i<thirtyOneArray.length-3;i++){
+          calendarIndex[firstDay+i].textContent = thirtyOneArray[i];
+        }
+      } else {
+        for(let i =0;i<thirtyOneArray.length;i++){
+          calendarIndex[firstDay+i].textContent = thirtyOneArray[i];
+        }
       }
     }
   }
-
-  thiryDaytoggle();
-  putMonth();
-  fillDays();
+  //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+  //날짜에 day를 모두 채우는 함수
+  showYear(); //year표시
+  showMonth(); //month표시
+  thirtyDaytoggler(); //fillDays전에 몇일로 되있는 달인지 확인
+  fillDays(); //day표시
 }
 
 function reset(){
@@ -81,8 +96,6 @@ function reset(){
   }
 }
 
-
 makeCalendar(startMonth);
-
 nextMonthBtns.addEventListener('click',()=>{startMonth++; reset(); makeCalendar(startMonth)});
 previousMonthBtns.addEventListener('click',()=>{startMonth--; reset(); makeCalendar(startMonth)})
