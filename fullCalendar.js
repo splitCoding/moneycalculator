@@ -1,12 +1,10 @@
 const jsCalendar = document.querySelector(".js-calendar");
 const calendarIndex = jsCalendar.querySelectorAll('td');
 const date = new Date();
-date.setFullYear(2021,5,17,1);
-const month = date.getMonth();
+let month = 1;
+date.setFullYear(2021,`${month-1}`,1);
+const firstDay = date.getDay();
 const thirtyMonth = [2,4,6,9,11];
-const day = date.getDate();
-const week = ['sunday','monday','tuesday','wednesday', 'thursday','friday','saturday'];
-const today = date.getDay();
 const thirtyArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
 const thirtyOneArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31];
 let isItThirty = false;
@@ -16,13 +14,7 @@ function changeMonth(){
   monthArea.textContent = `${month}월`;
 }
 
-function monthStart(){
-  const rest = day % 7;
-  let firstDate = today-rest+1;
-  if(firstDate < 0){ firstDate += 7; }
-  console.log(week[firstDate]);
-  fillDays(firstDate);
-}
+changeMonth();
 
 function thiryDaytoggle(){
   if(thirtyMonth.includes(month)){
@@ -34,21 +26,18 @@ function thiryDaytoggle(){
   }
 }
 
-function fillDays(start){
+thiryDaytoggle();
+
+function fillDays(){
   if(isItThirty===true){
     for(let i =0;i<thirtyArray.length;i++){
-      calendarIndex[i+start].textContent = thirtyArray[i];
+      calendarIndex[firstDay+i].textContent = thirtyArray[i];
     }
   } else {
     for(let i =0;i<thirtyOneArray.length;i++){
-      calendarIndex[i+start].textContent = thirtyOneArray[i];
+      calendarIndex[firstDay+i].textContent = thirtyOneArray[i];
     }
   }
 }
 
-function init(){
-  thiryDaytoggle();
-  changeMonth();
-  monthStart();
-}
-init();
+fillDays();
