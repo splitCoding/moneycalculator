@@ -9,102 +9,95 @@ const thirtyMonth = [4,6,9,11];
 const thirtyArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
 const thirtyOneArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31];
 
-let addMonth = 0;
-let addYear = 0;
-
 //오늘날짜기준 month 구하는 함수
 function updateMonth(){
-  let date2 = new Date();
+  let date = new Date();
   date.setMonth(date2.getMonth());
 }
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-//달력을 만드는 함수
-function makeCalendar(){
 
-  let today = new Date();
-  let year = today.getFullYear();
-  let month = today.getMonth();
-
-  today.setFullYear(`${year}`,`${month}`,1);
+//오늘을 기준으로 이번달 1일이 무슨 요일인지 구하는 함수(setFullYear로 지정했기떄문에 사용하지 않음)
+function whatIsFirstDay(){
+  let firstDay = today.getDay();
   
-  //year를 표시해주는 함수
-  function showYear(){
-    yearArea.textContent = `${year+addYear}년`;
+  if(firstDay < 0){
+    return firstDay += 7;
+  } else {
+    return firstDay;
   }
-  //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-  //month를 표시해주는 함수
-  function showMonth(){
-    monthArea.textContent = `${month+addMonth+1}월`;
+}
+//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+//달력을 만드는 함수
+let addMonth = 0;
+let addYear = 0;
+
+function makeCalendar(){
+  let today = new Date();
+  let month = today.getMonth();
+  let year = today.getFullYear();
+  showYearAndMonth(month);
+  today.setFullYear(`${year}`,`${month+addMonth}`,1);
+  let day = today.getDay();
+  
+  //표시해야하는 year과 month를를 구하는 함수
+  function showYearAndMonth(month){
+    const absdivide12 = Math.floor(Math.abs((month)+addMonth)/12);
+    if(month + 1 + addMonth < 1){
+      monthArea.textContent = `${(month+1)+addMonth+(12*(absdivide12+1))}월`;
+      yearArea.textContent = `${year+addYear-(absdivide12+1)}년`;
+    } else if(month + 1 +addMonth > 12){
+      monthArea.textContent = `${(month+1)+addMonth-(12*(absdivide12))}월`;
+      yearArea.textContent = `${year+addYear+(absdivide12)}년`;
+    } else {
+      yearArea.textContent = `${year+addYear}년`;
+      monthArea.textContent = `${(month+1)+addMonth}월`;
+    }
   }
-  //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+
   //30일로 된 month인지 알아내는 함수
   let isItThirty = false;
 
   function thirtyDaytoggler(){
-    if(thirtyMonth.includes(month+1)){
+    if(thirtyMonth.includes((month+1)+addMonth)){
       isItThirty = true;
     } else {
       isItThirty = false;
     }
   }
   //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-  //1일이 무슨 요일인지 구하는 함수
-  function whatIsFirstDay(){
-    let firstDay = today.getDay();
-    
-    if(firstDay < 0){
-      return firstDay += 7;
-    } else {
-      return firstDay;
-    }
-  }
-  //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+
   //day를 표시하는 함수(2월은 28일)
   function fillDays(){
     if(isItThirty===true){
       for(let i =0;i<thirtyArray.length;i++){
-        calendarIndex[whatIsFirstDay()+i].textContent = thirtyArray[i];
+        calendarIndex[day+i].textContent = thirtyArray[i];
       }
     } else {
       if(month+1 === 2){
         for(let i =0;i<thirtyOneArray.length-3;i++){
-          calendarIndex[whatIsFirstDay()+i].textContent = thirtyOneArray[i];
+          calendarIndex[day+i].textContent = thirtyOneArray[i];
         }
       } else {
         for(let i =0;i<thirtyOneArray.length;i++){
-          calendarIndex[whatIsFirstDay()+i].textContent = thirtyOneArray[i];
+          calendarIndex[day+i].textContent = thirtyOneArray[i];
         }
       }
     }
   }
-  //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-  //날짜에 day를 모두 채우는 함수
-  showYear(); //year표시
-  showMonth(); //month표시
+
   thirtyDaytoggler(); //fillDays전에 몇일로 되있는 달인지 확인
   fillDays(); //day표시
 }
-
+//모든 날짜칸을 비우는 함수
 function reset(){
   for(let index of calendarIndex){
     index.textContent="";
   }
 }
-
-//표시해야하는 year를 구하는 함수
-function changeYear(input){
-  const abs = Math.abs(input);
-
-  if(month >= 13){
-    startMonth -= 12;
-    yearAdd = month/12 +1;
-  }
-  if(month < 1){
-    startMonth = 12 - (abs%12);
-    yearAdd = -((abs/12)+1);
-  }
-}
-//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
 makeCalendar();
 nextMonthBtns.addEventListener('click',()=>{addMonth++; reset(); makeCalendar()});
