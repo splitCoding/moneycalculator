@@ -33,22 +33,27 @@ let addMonth = 0;
 let addYear = 0;
 
 function makeCalendar(){
+  addYear += Math.floor((Math.abs(addMonth)-1)/12);
   let today = new Date();
   let month = today.getMonth();
   let year = today.getFullYear();
   showYearAndMonth(month);
-  today.setFullYear(`${year}`,`${month+addMonth}`,1);
+  today.setFullYear(`${year+addYear}`,`${(month+addMonth)%12}`,1);
   let day = today.getDay();
   
-  //표시해야하는 year과 month를를 구하는 함수
+  //표시해야하는 year과 month를 구하는 함수
   function showYearAndMonth(month){
-    const absdivide12 = Math.floor(Math.abs((month)+addMonth)/12);
+    const absdivide12 = Math.floor(Math.abs((month)+1+addMonth)/12);
     if(month + 1 + addMonth < 1){
-      monthArea.textContent = `${(month+1)+addMonth+(12*(absdivide12+1))}월`;
+      monthArea.textContent = `${month+1+addMonth+(12*(absdivide12+1))}월`;
       yearArea.textContent = `${year+addYear-(absdivide12+1)}년`;
     } else if(month + 1 +addMonth > 12){
-      monthArea.textContent = `${(month+1)+addMonth-(12*(absdivide12))}월`;
+      if(month+1+addMonth-(12*(absdivide12))===0){
+        monthArea.textContent = `12월`;
+      } else {
+      monthArea.textContent = `${month+1+addMonth-(12*(absdivide12))}월`;
       yearArea.textContent = `${year+addYear+(absdivide12)}년`;
+      }
     } else {
       yearArea.textContent = `${year+addYear}년`;
       monthArea.textContent = `${(month+1)+addMonth}월`;
@@ -76,7 +81,7 @@ function makeCalendar(){
         calendarIndex[day+i].textContent = thirtyArray[i];
       }
     } else {
-      if(month+1 === 2){
+      if((month+addMonth+1)%12 === 2){
         for(let i =0;i<thirtyOneArray.length-3;i++){
           calendarIndex[day+i].textContent = thirtyOneArray[i];
         }
