@@ -9,6 +9,8 @@ const inputs = inputFullDate.querySelectorAll('input');
 const inputBtn = inputFullDate.querySelector('button');
 const inputYear = inputs[0];
 const inputMonth = inputs[1];
+const backToNow = document.querySelector("#backToNow");
+const backToNowBtn = backToNow.querySelector("button");
 
 const thirtyMonth = [4,6,9,11];
 const thirtyArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
@@ -201,10 +203,12 @@ function makeCalendarWhenInputExist(){
   }
   fillDays(); 
   //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-  
+  nextMonthBtns.style.display = "none";
+  previousMonthBtns.style.display ="none";
 }
 
 
 nextMonthBtns.addEventListener('click',()=>{addMonth++; makeCalendar()});
 previousMonthBtns.addEventListener('click',()=>{addMonth--; makeCalendar()});
 inputBtn.addEventListener('click',makeCalendarWhenInputExist);
+backToNowBtn.addEventListener('click',()=>{addMonth =0; addYear =0; makeCalendar()});
