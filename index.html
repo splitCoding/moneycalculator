@@ -3,96 +3,103 @@
   <head>
     <meta charset="utf-8"/>
     <link href="./css/styles.css" rel="stylesheet"/>
+    <link href="./css/calendar.css" rel="stylesheet"/>
+    <link href="./css/inputAndBtn.css" rel="stylesheet"/>
+    <link href="./css/popUp.css" rel="stylesheet"/>
     <title>너얼마나썻냐</title>
   </head>
   <body>
     <h1 id='logo'>너 얼마나 쓴지는 알고쓰냐?</h1>
-    <div id="calendarContainer">
-      <div id="year"></div>
-      <div id="month">1월</div>
-      <div id = "calendarButtons">
-        <div id ="button1">
-          <button id="previousMonth"><img src = "./images/button.png"/></button>
+    <div id="popUp">
+    </div>
+    <div id="mainContainer">
+      <div id="calendarContainer">
+        <div id="year"></div>
+        <div id="month">1월</div>
+        <div id = "calendarButtons">
+          <div id ="button1">
+            <button id="previousMonth"><img src = "./images/button.png"/></button>
+          </div>
+          <table id="calendar" class="js-calendar">
+            <tr>
+              <th class ="day sunday" style= "border-radius: 20px 0px 0px 0px">일</th>
+              <th class ="day monday">월</th>
+              <th class ="day tuesday">화</th>
+              <th class ="day wednesday">수</th>
+              <th class ="day tursday">목</th>
+              <th class ="day friday">금</th>
+              <th class ="day saturday" style= "border-radius: 0px 20px 0px 0px">토</th>
+            </tr> 
+            <tr id="firstLine">
+              <td calss="date sunday"></td>
+              <td calss="date moneday"></td>
+              <td calss="date tuesday"></td>
+              <td calss="date wednesday"></td>
+              <td calss="date thursday"></td>
+              <td calss="date friday"></td>
+              <td calss="date saturday"></td>
+            </tr>
+            <tr id="secondLine">
+              <td calss="date sunday"></td>
+              <td calss="date moneday"></td>
+              <td calss="date tuesday"></td>
+              <td calss="date wednesday"></td>
+              <td calss="date thursday"></td>
+              <td calss="date friday"></td>
+              <td calss="date saturday"></td>
+            </tr>
+            <tr id="thirdLine">
+              <td calss="date sunday"></td>
+              <td calss="date moneday"></td>
+              <td calss="date tuesday"></td>
+              <td calss="date wednesday"></td>
+              <td calss="date thursday"></td>
+              <td calss="date friday"></td>
+              <td calss="date saturday"></td>
+            </tr>
+            <tr id="fourthLine">
+              <td calss="date sunday"></td>
+              <td calss="date moneday"></td>
+              <td calss="date tuesday"></td>
+              <td calss="date wednesday"></td>
+              <td calss="date thursday"></td>
+              <td calss="date friday"></td>
+              <td calss="date saturday"></td>
+            </tr>
+            <tr id="fifthLine">
+              <td calss="date sunday"></td>
+              <td calss="date moneday"></td>
+              <td calss="date tuesday"></td>
+              <td calss="date wednesday"></td>
+              <td calss="date thursday"></td>
+              <td calss="date friday"></td>
+              <td calss="date saturday"></td>
+            </tr>
+            <tr id="sixthLine">
+              <td calss="date sunday"style= "border-radius: 0px 0px 0px 20px"></td>
+              <td calss="date moneday"></td>
+              <td calss="date tuesday"></td>
+              <td calss="date wednesday"></td>
+              <td calss="date thursday"></td>
+              <td calss="date friday"></td>
+              <td calss="date saturday" style= "border-radius: 0px 0px 20px 0px"></td>
+            </tr>
+          </table>
+          <div id="button2">
+            <button id="nextMonth"><img src = "./images/button.png"/></button>
+          </div>
         </div>
-        <table id="calendar" class="js-calendar">
-          <tr>
-            <th class ="day sunday" style= "border-radius: 20px 0px 0px 0px">일</th>
-            <th class ="day monday">월</th>
-            <th class ="day tuesday">화</th>
-            <th class ="day wednesday">수</th>
-            <th class ="day tursday">목</th>
-            <th class ="day friday">금</th>
-            <th class ="day saturday" style= "border-radius: 0px 20px 0px 0px">토</th>
-          </tr> 
-          <tr id="firstLine">
-            <td calss="date sunday"></td>
-            <td calss="date moneday"></td>
-            <td calss="date tuesday"></td>
-            <td calss="date wednesday"></td>
-            <td calss="date thursday"></td>
-            <td calss="date friday"></td>
-            <td calss="date saturday"></td>
-          </tr>
-          <tr id="secondLine">
-            <td calss="date sunday"></td>
-            <td calss="date moneday"></td>
-            <td calss="date tuesday"></td>
-            <td calss="date wednesday"></td>
-            <td calss="date thursday"></td>
-            <td calss="date friday"></td>
-            <td calss="date saturday"></td>
-          </tr>
-          <tr id="thirdLine">
-            <td calss="date sunday"></td>
-            <td calss="date moneday"></td>
-            <td calss="date tuesday"></td>
-            <td calss="date wednesday"></td>
-            <td calss="date thursday"></td>
-            <td calss="date friday"></td>
-            <td calss="date saturday"></td>
-          </tr>
-          <tr id="fourthLine">
-            <td calss="date sunday"></td>
-            <td calss="date moneday"></td>
-            <td calss="date tuesday"></td>
-            <td calss="date wednesday"></td>
-            <td calss="date thursday"></td>
-            <td calss="date friday"></td>
-            <td calss="date saturday"></td>
-          </tr>
-          <tr id="fifthLine">
-            <td calss="date sunday"></td>
-            <td calss="date moneday"></td>
-            <td calss="date tuesday"></td>
-            <td calss="date wednesday"></td>
-            <td calss="date thursday"></td>
-            <td calss="date friday"></td>
-            <td calss="date saturday"></td>
-          </tr>
-          <tr id="sixthLine">
-            <td calss="date sunday"style= "border-radius: 0px 0px 0px 20px"></td>
-            <td calss="date moneday"></td>
-            <td calss="date tuesday"></td>
-            <td calss="date wednesday"></td>
-            <td calss="date thursday"></td>
-            <td calss="date friday"></td>
-            <td calss="date saturday" style= "border-radius: 0px 0px 20px 0px"></td>
-          </tr>
-        </table>
-        <div id="button2">
-          <button id="nextMonth"><img src = "./images/button.png"/></button>
+        <div id="inputFullDate">
+          <input type = 'text' placeholder="year(ex.2021)"/>
+          <input type = 'text' placeholder="month(ex.4)"/>
+          <button>입력</button>
         </div>
+        <div id="backToNow">
+          <button>현재로 돌아가기</button>
+        </div>
+        <script src="./js/makeFullCalendar.js"></script>
+        <script src="./js/includeHTML.js"></script>
       </div>
-      <div id="inputFullDate">
-        <input type = 'text' placeholder="year(ex.2021)"/>
-        <input type = 'text' placeholder="month(ex.4)"/>
-        <button>입력</button>
-      </div>
-      <div id="backToNow">
-        <button>현재로 돌아가기</button>
-      </div>
-      <script src="./js/makeFullCalendar.js"></script>
-      <script src="./js/includeHTML.js"></script>
     </div>
   </body>
 </html>
