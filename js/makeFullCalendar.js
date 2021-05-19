@@ -121,6 +121,8 @@ function makeCalendar(){
 
   fillDays(); 
   //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+  const dayActive = document.querySelectorAll(".dayActive");
+  dayActivePopUp(dayActive);
 }
 makeCalendar();
 
@@ -213,6 +215,8 @@ function makeCalendarWhenInputExist(){
   //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
   nextMonthBtns.style.display = "none";
   previousMonthBtns.style.display ="none";
+  const dayActive = document.querySelectorAll(".dayActive");
+  dayActivePopUp(dayActive);
 }
 
 
@@ -232,13 +236,16 @@ backToNowBtn.addEventListener('click',()=>{
 });
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
-//날짜가 입력된 칸을 작성시 popUp창 나타나는 기능
-Array.from(calendarIndex).forEach((each)=>{
-  each.addEventListener('click',()=>{
-    document.querySelector("#popUp").style.display = "inline-block";
-    })
-  }
-);
+//날짜가 입력된 칸을 작성시 popUp창 나타나는 함수
+function dayActivePopUp(calendarIndex){
+  Array.from(calendarIndex).forEach((each)=>{
+    each.addEventListener('click',()=>{
+      document.querySelector("#popUp").style.display = "inline-block";
+      })
+    }
+  );
+}
+
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
 //popUp창의 x버튼을 누를시 popUp창 사라짐
