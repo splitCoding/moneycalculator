@@ -34,6 +34,7 @@ let addYear = 0;
 // addYear += Math.floor((Math.abs(addMonth)-1)/12);
 
 function makeCalendar(){
+  reset();
   let today = new Date();
   let startMonth = today.getMonth()+addMonth;
   let startYear = today.getFullYear()+addYear;
@@ -62,7 +63,7 @@ function makeCalendar(){
   let isItThirty = false;
 
   function thirtyDaytoggler(){
-    if(thirtyMonth.includes((month+1)+addMonth)){
+    if(thirtyMonth.includes(startMonth%12+1)){
       isItThirty = true;
     } else {
       isItThirty = false;
@@ -78,27 +79,32 @@ function makeCalendar(){
     if(isItThirty===true){
       for(let i =0;i<thirtyArray.length;i++){
         calendarIndex[day+i].textContent = thirtyArray[i];
+        calendarIndex[day+i].classList.add('dayActive');
       }
-    } else {
+    } else if(isItThirty===false){
       if((startMonth)%12 === 1){
         if(startYear%4===0){
           for(let i =0;i<thirtyOneArray.length-2;i++){
             calendarIndex[day+i].textContent = thirtyOneArray[i];
+            calendarIndex[day+i].classList.add('dayActive');
           }
         } else { 
           for(let i =0;i<thirtyOneArray.length-3;i++){
             calendarIndex[day+i].textContent = thirtyOneArray[i];
+            calendarIndex[day+i].classList.add('dayActive');
           }
         }
       } else {
-        for(let i =0;i<thirtyOneArray.length;i++){
-          calendarIndex[day+i].textContent = thirtyOneArray[i];
+        if(isItThirty===false){
+          for(let i =0;i<thirtyOneArray.length;i++){
+            calendarIndex[day+i].textContent = thirtyOneArray[i];
+            calendarIndex[day+i].classList.add('dayActive');
+          }
         }
       }
     }
   }
   fillDays(); 
-  
   //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 }
 makeCalendar();
@@ -111,5 +117,5 @@ function reset(){
 }
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
-nextMonthBtns.addEventListener('click',()=>{addMonth++; reset(); makeCalendar()});
-previousMonthBtns.addEventListener('click',()=>{addMonth--; reset(); makeCalendar()})
+nextMonthBtns.addEventListener('click',()=>{addMonth++; makeCalendar()});
+previousMonthBtns.addEventListener('click',()=>{addMonth--; makeCalendar()});
