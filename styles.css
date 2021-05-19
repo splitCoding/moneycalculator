@@ -107,3 +107,17 @@ body{
 #nextMonth:active{
   transform : scale(0.9);
 }
+
+#inputFullDate input{
+  height : 35px;
+  width : 140px;
+  font-size : 18px;
+  outline : none;
+  border : 1px solid rgb(175, 175, 175);
+  border-radius: 12px;
+  text-align: center;
+}
+
+#inputFullDate input:nth-child(2){
+  width : 120px;
+}
