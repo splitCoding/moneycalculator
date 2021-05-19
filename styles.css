@@ -123,19 +123,23 @@ body{
   width : 120px;
 }
 #inputFullDate button{
+  font-family: 'Hi Melody', cursive;
+  font-weight: bold;
   height : 35px;
   width : 50px;
-  font-size : 14px;
+  font-size : 18px;
   outline : none;
   border : 1px solid rgb(175, 175, 175);
   border-radius: 12px;
   text-align: center;
 }
 #backToNow button{
+  font-family: 'Hi Melody', cursive;
+  font-weight: bold;
   margin-top : 10px;
   height : 35px;
-  width : 120px;
-  font-size : 14px;
+  width : 130px;
+  font-size : 18px;
   outline : none;
   border : 1px solid rgb(175, 175, 175);
   border-radius: 12px;
