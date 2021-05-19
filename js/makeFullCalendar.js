@@ -11,6 +11,7 @@ const inputYear = inputs[0];
 const inputMonth = inputs[1];
 const backToNow = document.querySelector("#backToNow");
 const backToNowBtn = backToNow.querySelector("button");
+const popUp = document.querySelector('#popUp');
 const thirtyMonth = [4,6,9,11];
 const thirtyArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
 const thirtyOneArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31];
@@ -117,6 +118,7 @@ function makeCalendar(){
       }
     }
   }
+
   fillDays(); 
   //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 }
@@ -214,10 +216,13 @@ function makeCalendarWhenInputExist(){
 }
 
 
+//다음달, 이전달, 입력한 년도와 달로 이동하는 버튼 기능
 nextMonthBtns.addEventListener('click',()=>{addMonth++; makeCalendar()});
 previousMonthBtns.addEventListener('click',()=>{addMonth--; makeCalendar()});
 inputBtn.addEventListener('click',makeCalendarWhenInputExist);
+//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
+//현재 기준의 년도와 달로 다시 이동하는 버튼 기능
 backToNowBtn.addEventListener('click',()=>{
   addMonth =0;
   addYear =0;
@@ -225,3 +230,20 @@ backToNowBtn.addEventListener('click',()=>{
   previousMonthBtns.style.display ="flex";
   makeCalendar();
 });
+//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+//날짜가 입력된 칸을 작성시 popUp창 나타나는 기능
+Array.from(calendarIndex).forEach((each)=>{
+  each.addEventListener('click',()=>{
+    document.querySelector("#popUp").style.display = "inline-block";
+    })
+  }
+);
+//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+//popUp창의 x버튼을 누를시 popUp창 사라짐
+const popUpBtn = document.querySelector("#popUp img");
+popUpBtn.addEventListener('click',()=>{
+  document.querySelector("#popUp").style.display = "none";
+})
+//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
