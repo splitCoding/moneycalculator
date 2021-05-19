@@ -42,7 +42,7 @@ body{
   align-items : center;
   height : 100%;
   width : 800px;
-  background-image: url("./images/backgound.png");
+  background-image: url("../images/backgound.png");
   background-size : cover;
   background-position : center center;
   border : none;
