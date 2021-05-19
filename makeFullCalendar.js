@@ -11,7 +11,6 @@ const inputYear = inputs[0];
 const inputMonth = inputs[1];
 const backToNow = document.querySelector("#backToNow");
 const backToNowBtn = backToNow.querySelector("button");
-
 const thirtyMonth = [4,6,9,11];
 const thirtyArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
 const thirtyOneArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31];
@@ -128,12 +127,19 @@ let addinputYear = 0;
 
 //Input으로 바로 날짜를 바꿀때 사용하는 함수
 function makeCalendarWhenInputExist(){
+  if((inputYear.value-'0')!==Number(inputYear.value)||(inputMonth.value-'0')!==Number(inputMonth.value)){
+    alert("숫자를 입력해주세요");
+    return;
+  }
+  
   reset();
   yearArea.textContent = "";
   monthArea.textContent = "";
   let today2 = new Date();
-  let startYear = Number(inputYear.value) + addinputYear;
-  let startMonth = Number(inputMonth.value) + addinputMonth -1;
+  let startYear = (inputYear.value-'0') + addinputYear;
+  let startMonth = (inputMonth.value-'0') + addinputMonth -1;
+
+  
   console.log(startYear,startMonth);
     
   //현재month를 기준으로 이전과 이후로 이동할때 startMonth, startYear 재지정

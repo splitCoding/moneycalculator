@@ -8,6 +8,7 @@
 }
 body{
   height:100%;
+  background-color: rgb(255, 255, 238);
 }
 #logo{
   font-family: 'Hi Melody', cursive;
@@ -120,4 +121,23 @@ body{
 
 #inputFullDate input:nth-child(2){
   width : 120px;
+}
+#inputFullDate button{
+  height : 35px;
+  width : 50px;
+  font-size : 14px;
+  outline : none;
+  border : 1px solid rgb(175, 175, 175);
+  border-radius: 12px;
+  text-align: center;
+}
+#backToNow button{
+  margin-top : 10px;
+  height : 35px;
+  width : 120px;
+  font-size : 14px;
+  outline : none;
+  border : 1px solid rgb(175, 175, 175);
+  border-radius: 12px;
+  text-align: center;
 }
