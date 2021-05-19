@@ -217,4 +217,10 @@ function makeCalendarWhenInputExist(){
 nextMonthBtns.addEventListener('click',()=>{addMonth++; makeCalendar()});
 previousMonthBtns.addEventListener('click',()=>{addMonth--; makeCalendar()});
 inputBtn.addEventListener('click',makeCalendarWhenInputExist);
-backToNowBtn.addEventListener('click',()=>{addMonth =0; addYear =0; makeCalendar()});
+backToNowBtn.addEventListener('click',()=>{
+  addMonth =0;
+  addYear =0;
+  nextMonthBtns.style.display = "flex";
+  previousMonthBtns.style.display ="flex";
+  makeCalendar();
+});
