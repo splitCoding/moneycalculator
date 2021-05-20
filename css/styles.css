@@ -8,13 +8,10 @@
 }
 body{
   height:100%;
-  background-color: rgb(255, 255, 238);
+  background-color: rgb(255, 253, 241);
 }
 #logo{
   font-family: 'Hi Melody', cursive;
   text-align: center;
   margin : 60px 0px 60px 0px;
-}
-#container{
-  display : inline-block;
 }

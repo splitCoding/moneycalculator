@@ -6,7 +6,7 @@
   width : 100%;
   height : 650px;
 }
-#calendarButtons{
+#calendarAndButtons{
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -30,7 +30,7 @@
   background-position : center center;
   border : none;
 }
-#calendar tr{
+tr{
   display : flex;
   flex-direction: row;
   line-height : 60px;
@@ -38,24 +38,30 @@
   margin : 2px 0px;
 }
 
-#calendar tr *{
+tr *{
   width : 84px;
   vertical-align: middle;
+  text-align: center;
   background-color : rgb(255, 214, 214);
-  font-size : 23px;
 }
 
-#calendar tr th{
-  width : 84px;
+tr th{
+  font-size : 23px;
   color : rgb(255, 255, 255);
   text-shadow: 1px 1px 7px rgb(177, 61, 61);
 }
-#calendar td{
-  font-family: 'Noto Sans KR', sans-serif;
-  text-align: center;
-  color : rgb(255, 110, 110);
+tr > td{
   font-size : 26px;
+  color : rgb(255, 110, 110);
+  font-family: 'Noto Sans KR', sans-serif;
 }
+
 .dayActive{
   cursor : pointer;
+}
+
+#thisIsToday{
+  color : white;
+  font-size : 40px;
+  text-shadow : 0px 1px 5px gray;
 }

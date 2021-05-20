@@ -23,7 +23,12 @@ function reset(){
     yearArea.textContent = "";
     monthArea.textContent = "";
     if(Array.from(index.classList).includes('dayActive')){
+      const thisIsTodayID = document.getElementById('thisIsToday');
+
       index.classList.remove("dayActive");
+      if(thisIsTodayID !== null){
+        thisIsTodayID.removeAttribute("id");
+      }
       index.removeEventListener('click',showPopUp);
     }
   }
@@ -125,13 +130,25 @@ function makeCalendar(){
   }
   fillDays(); 
   //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+  //오늘의 날짜를 달력에 표시
+  let today2 = new Date();
 
+  function checkToday(){
+    if(today2.getFullYear() === startYear && today2.getMonth() ===startMonth){
+      for(let element of calendarIndex){
+        if(Number(element.textContent) === today2.getDate()){
+          element.setAttribute("id","thisIsToday");
+        }
+      }
+    }
+  }
+  checkToday();
+  //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
   //dayActivePopUp함수를 dayActive 클래스를 가진 모든요소에 대입
   let dayActiveAfter = document.querySelectorAll(".dayActive");
   dayActivePopUp(dayActiveAfter);
 }
 //***************************************************** 
-
 
 let addinputMonth = 0;
 let addinputYear = 0;
@@ -213,6 +230,20 @@ function makeCalendarWhenInputExist(){
     }
   }
   fillDays(); 
+  //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+  //오늘의 날짜를 달력에 표시
+  let today3 = new Date();
+
+  function checkToday(){
+    if(today3.getFullYear() === startYear && today3.getMonth() ===startMonth){
+      for(let element of calendarIndex){
+        if(Number(element.textContent) === today3.getDate()){
+          element.setAttribute("id","thisIsToday");
+        }
+      }
+    }
+  }
+  checkToday();
   //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
   //다음달, 이전달 버튼비활성화
   nextMonthBtns.style.display = "none";
