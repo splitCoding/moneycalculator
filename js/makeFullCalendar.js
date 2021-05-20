@@ -12,11 +12,19 @@ const inputMonth = inputs[1];
 const backToNow = document.querySelector("#backToNow");
 const backToNowBtn = backToNow.querySelector("button");
 const popUp = document.querySelector('#popUp');
+const popUpBtn = document.querySelector("#popUp img");
 const thirtyMonth = [4,6,9,11];
 const thirtyArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
 const thirtyOneArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31];
+let addYear = 0; //year값 변동을 위해 추가되는 값
+let addMonth = 0; //month값 변동을 위해 추가되는 값
+let addMonthForInputExist = 0;
+let addYearForInputExist = 0;
+let isItThirty = false; //thirtyDayToggler에 쓰일 값
 
-//모든 년도, 월, 날짜칸을 비우고 dayActive클래스 삭제 함수
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@단독 function들 리스트 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+//1. reset : 모든 년도, 월, 날짜칸을 비우고 dayActive클래스 삭제 함수
 function reset(){
   for(let index of calendarIndex){
     index.textContent="";
@@ -33,13 +41,13 @@ function reset(){
     }
   }
 }
-//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
-//popUp창이 나타나게 하는 함수
+
+//2. showPopUp : popUp창의 display가 none에서 inline-block으로 바뀜(eventlistener에 사용)
 function showPopUp(){ popUp.style.display = "inline-block"; }
-//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
-//dayActive클래스가 있는 칸을 클릭시 popUp창 나타나는 함수
+
+//3. dayActivePopUp : 매개변수로 받은 배열의 요소중 dayActive클래스가 있는 칸에 클릭시 showPopup 함수실행되는 이벤트리스너 추가
 function dayActivePopUp(array){
   for(let element of array){
     if(Array.from(element.classList).includes('dayActive')){
@@ -47,228 +55,150 @@ function dayActivePopUp(array){
     }
   }
 }
-//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
-//다음달, 이전달, 입력한 년도와 달로 이동하는 버튼 기능
-nextMonthBtns.addEventListener('click',()=>{addMonth++; makeCalendar()});
-previousMonthBtns.addEventListener('click',()=>{addMonth--; makeCalendar()});
-inputBtn.addEventListener('click',makeCalendarWhenInputExist);
-//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
-let addMonth = 0;
-let addYear = 0;
-
-//달력을 만드는 함수*********************************************
-function makeCalendar(){
-  reset();
-
-  let today = new Date();
-  let startMonth = today.getMonth()+addMonth;
-  let startYear = today.getFullYear()+addYear;
-
-  //현재month를 기준으로 이전과 이후로 이동할때 startMonth, startYear 재지정
-  if(startMonth >= 0){
-    startYear+=parseInt(startMonth/12)
-    startMonth%=12
-  } else if(startMonth < 0){
-    startYear += -1+parseInt((startMonth+1)/12);
-    startMonth = -12*(parseInt((startMonth+1)/12)-1) - Math.abs(startMonth);
-  }
-  //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-
-  //startYear을 year로 startMonth를 month로 설정하고 화면에 표시하는 함수 실행
-  function setYearAndMonth(){
-    today.setFullYear(`${startYear}`,`${startMonth}`,1);
-    yearArea.textContent = `${startYear}년`;
-    monthArea.textContent = `${startMonth+1}월`;
-  }
-  setYearAndMonth();
-  //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-
-  //30일로 된 month인지 알아내는 함수실행
-  let isItThirty = false;
-  function thirtyDaytoggler(){
-    if(thirtyMonth.includes(startMonth%12+1)){
-      isItThirty = true;
-    } else {
-      isItThirty = false;
-    }
-  }
-  thirtyDaytoggler();
-  //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-
-  //day를 표시하는 함수실행(2월은 28일 윤달은 29일)
-  function fillDays(){
-    let day = today.getDay();
-    if(isItThirty===true){
-      for(let i =0;i<thirtyArray.length;i++){
-        calendarIndex[day+i].textContent = thirtyArray[i];
-        calendarIndex[day+i].classList.add('dayActive');
-      }
-    } else if(isItThirty===false){
-      if((startMonth)%12 === 1){
-        if(startYear%4===0){
-          for(let i =0;i<thirtyOneArray.length-2;i++){
-            calendarIndex[day+i].textContent = thirtyOneArray[i];
-            calendarIndex[day+i].classList.add('dayActive');
-          }
-        } else { 
-          for(let i =0;i<thirtyOneArray.length-3;i++){
-            calendarIndex[day+i].textContent = thirtyOneArray[i];
-            calendarIndex[day+i].classList.add('dayActive');
-          }
-        }
-      } else {
-        if(isItThirty===false){
-          for(let i =0;i<thirtyOneArray.length;i++){
-            calendarIndex[day+i].textContent = thirtyOneArray[i];
-            calendarIndex[day+i].classList.add('dayActive');
-          }
-        }
-      }
-    }
-  }
-  fillDays(); 
-  //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-  //오늘의 날짜를 달력에 표시
-  let today2 = new Date();
-
-  function checkToday(){
-    if(today2.getFullYear() === startYear && today2.getMonth() ===startMonth){
-      for(let element of calendarIndex){
-        if(Number(element.textContent) === today2.getDate()){
-          element.setAttribute("id","thisIsToday");
-        }
-      }
-    }
-  }
-  checkToday();
-  //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-  //dayActivePopUp함수를 dayActive 클래스를 가진 모든요소에 대입
-  let dayActiveAfter = document.querySelectorAll(".dayActive");
-  dayActivePopUp(dayActiveAfter);
+//4. putMonthAndDayInPopUp : 
+function putMonthAndDayInPopUp(){
+  document.querySelector("#popUpMonthAndDay").textContent = `년 일`
 }
-//***************************************************** 
+putMonthAndDayInPopUp();
 
-let addinputMonth = 0;
-let addinputYear = 0;
 
-//Input으로 날짜를 바꿨을때 달력만들어주는 함수********************************
+//5. setYearAndMonth : 입력한 year값과 month값으로 지금 날짜가 정해지고 화면에 표시하는 함수 실행
+function setYearAndMonth(inputYear, inputMonth, dateObject){
+  dateObject.setFullYear(`${inputYear}`,`${inputMonth}`,1);
+  yearArea.textContent = `${inputYear}년`;
+  monthArea.textContent = `${inputMonth+1}월`;
+}
+
+
+//6. thirtyDayToggler : 30일로 된 month인지 아닌지
+function thirtyDayToggler(inputMonth){
+  if(thirtyMonth.includes(inputMonth%12+1)){
+    isItThirty = true;
+  } else {
+    isItThirty = false;
+  }
+}
+
+
+//7. fillDays : month에 알맞은 day를 달력에 표시하는 함수(2월은 28일 윤달은 29일)
+function fillDays(inputYear, inputMonth, dateObject){
+  let day = dateObject.getDay();
+  if(isItThirty===true){
+    for(let i =0;i<thirtyArray.length;i++){
+      calendarIndex[day+i].textContent = thirtyArray[i];
+      calendarIndex[day+i].classList.add('dayActive');
+    }
+  } else if(isItThirty===false){
+    if((inputMonth+1)%12 === 2){
+      if(inputYear%4===0){
+        for(let i =0;i<thirtyOneArray.length-2;i++){
+          calendarIndex[day+i].textContent = thirtyOneArray[i];
+          calendarIndex[day+i].classList.add('dayActive');
+        }
+      } else { 
+        for(let i =0;i<thirtyOneArray.length-3;i++){
+          calendarIndex[day+i].textContent = thirtyOneArray[i];
+          calendarIndex[day+i].classList.add('dayActive');
+        }
+      }
+    } else {
+      if(isItThirty===false){
+        for(let i =0;i<thirtyOneArray.length;i++){
+          calendarIndex[day+i].textContent = thirtyOneArray[i];
+          calendarIndex[day+i].classList.add('dayActive');
+        }
+      }
+    }
+  }
+}
+
+//8. checkToday : 달력에 오늘 날짜를 표시
+function checkToday(inputYear, inputMonth, dateObject){
+  if(dateObject.getFullYear() === inputYear && dateObject.getMonth() ===inputMonth){
+    for(let element of calendarIndex){
+      if(Number(element.textContent) === dateObject.getDate()){
+        element.setAttribute("id","thisIsToday");
+      }
+    }
+  }
+}
+
+
+//9. makeCalendar : 달력을 만들어주는 함수
+function makeCalendar(){
+  reset(); //만들기전에 reset 함수실행
+
+  let today2 = new Date();//오늘날짜를 표시하기 위한 today2이름의 Date객체
+  let today = new Date(); //달력설정을 위해 쓰일 today이름의 Date객체 
+  let year = today.getFullYear()+addYear; //나중에 year값이 변할 수 있도록 addYear값 추가한 
+  let month = today.getMonth()+addMonth; //나중에 month값이 변할 수 있도록 addMonth값 추가
+
+  if(month >= 0){
+    year+=parseInt(month/12);
+    month%=12;
+  } else {
+    year+= parseInt((month+1)/12)-1;
+    month= -12 * (parseInt((month+1)/12)-1)-Math.abs(month);
+  }
+  //addMonth값이 변함에따라 month와 year값을 알맞게 바꿔주기(13월 -> 다음년도 1월)
+
+  setYearAndMonth(year,month,today);
+  thirtyDayToggler(month);
+  fillDays(year, month, today);
+  checkToday(year, month, today2);
+  dayActivePopUp(document.querySelectorAll(".dayActive"));
+}
+
+
+//10. makeCalendarWhenInputExist : year와 month를 입력했을시 달력을 만들어주는 함수
 function makeCalendarWhenInputExist(){
-  //숫자가 아닌 값이 입력됐을때 return;
   if((inputYear.value-'0')!==Number(inputYear.value)||(inputMonth.value-'0')!==Number(inputMonth.value)){
     alert("숫자를 입력해주세요");
     return;
   }
 
   reset();
-  let today2 = new Date();
-  let startYear = (inputYear.value-'0') + addinputYear;
-  let startMonth = (inputMonth.value-'0') + addinputMonth -1;
+  
+  let today2 = new Date();//오늘 날짜를 표시하기 위한 today3이름의 Date객체
+  let today = new Date();
+  let year = Number(inputYear.value) + addYearForInputExist;
+  let month = Number(inputMonth.value) + addMonthForInputExist -1;
     
-  //현재month를 기준으로 이전과 이후로 이동할때 startMonth, startYear 재지정
-  if(startMonth >= 0){
-    startYear+=parseInt(startMonth/12)
-    startMonth%=12
-  } else if(startMonth < 0){
-    startYear += -1+parseInt((startMonth+1)/12);
-    startMonth = -12*(parseInt((startMonth+1)/12)-1) - Math.abs(startMonth);
+  if(month >= 0){
+    year+=parseInt(month/12)
+    month%=12
+  } else if(month < 0){
+    year += -1+parseInt((month+1)/12);
+    month = -12*(parseInt((month+1)/12)-1) - Math.abs(month);
   }
-  //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+  //addMonth값이 변함에따라 month와 year값을 알맞게 바꿔주기(13월 -> 다음년도 1월)
 
-  //startYear을 year로 startMonth를 month로 설정하고 화면에 표시하는 함수실행
-  function setYearAndMonth(){
-    today2.setFullYear(`${startYear}`,`${startMonth}`,1);
-    yearArea.textContent = `${startYear}년`;
-    monthArea.textContent = `${startMonth+1}월`;
-  }
-  setYearAndMonth();
-  //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-
-  //30일로 된 month인지 알아내는 함수실행
-  let isItThirty = false;
-
-  function thirtyDaytoggler(){
-    if(thirtyMonth.includes(startMonth%12+1)){
-      isItThirty = true;
-    } else {
-      isItThirty = false;
-    }
-  }
-  thirtyDaytoggler();
-  //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-
-  //day를 표시하는 함수실행(2월은 28일 윤달은 29일)
-  function fillDays(){
-    let day = today2.getDay();
-    if(isItThirty===true){
-      for(let i =0;i<thirtyArray.length;i++){
-        calendarIndex[day+i].textContent = thirtyArray[i];
-        calendarIndex[day+i].classList.add('dayActive');
-      }
-    } else if(isItThirty===false){
-      if((startMonth)%12 === 1){
-        if(startYear%4===0){
-          for(let i =0;i<thirtyOneArray.length-2;i++){
-            calendarIndex[day+i].textContent = thirtyOneArray[i];
-            calendarIndex[day+i].classList.add('dayActive');
-          }
-        } else { 
-          for(let i =0;i<thirtyOneArray.length-3;i++){
-            calendarIndex[day+i].textContent = thirtyOneArray[i];
-            calendarIndex[day+i].classList.add('dayActive');
-          }
-        }
-      } else {
-        if(isItThirty===false){
-          for(let i =0;i<thirtyOneArray.length;i++){
-            calendarIndex[day+i].textContent = thirtyOneArray[i];
-            calendarIndex[day+i].classList.add('dayActive');
-          }
-        }
-      }
-    }
-  }
-  fillDays(); 
-  //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-  //오늘의 날짜를 달력에 표시
-  let today3 = new Date();
-
-  function checkToday(){
-    if(today3.getFullYear() === startYear && today3.getMonth() ===startMonth){
-      for(let element of calendarIndex){
-        if(Number(element.textContent) === today3.getDate()){
-          element.setAttribute("id","thisIsToday");
-        }
-      }
-    }
-  }
-  checkToday();
-  //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-  //다음달, 이전달 버튼비활성화
+  setYearAndMonth(year, month, today);
+  thirtyDayToggler(month);
+  fillDays(year, month, today);
+  checkToday(year, month, today2);
+  dayActivePopUp(document.querySelectorAll(".dayActive"));
   nextMonthBtns.style.display = "none";
   previousMonthBtns.style.display ="none";
-  
-  let dayActiveAfter = document.querySelectorAll(".dayActive");
-  dayActivePopUp(dayActiveAfter);
 }
-//***************************************************************
 
-//현재 기준의 년도와 달로 다시 이동하는 버튼 기능
+
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@바로실행되는 코드들@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+makeCalendar();
+nextMonthBtns.addEventListener('click',()=>{addMonth++; makeCalendar()}); //오른쪽버튼 클릭시 month값에 더해지는 addMonth값에 1을 추가하고 다시 달력즉시생성
+previousMonthBtns.addEventListener('click',()=>{addMonth--; makeCalendar()}); //왼쪽버튼 클릭시 month값에 더해지는 addMonth값에 1을 빼고 다시 달력즉시생성
+inputBtn.addEventListener('click',makeCalendarWhenInputExist); //입력버튼 클릭시 입력값이 존재할시 달력을 만들어주는 함수 실행
+
 backToNowBtn.addEventListener('click',()=>{
   addMonth =0;
   addYear =0;
   nextMonthBtns.style.display = "flex";
   previousMonthBtns.style.display ="flex";
   makeCalendar();
-});
-//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+}); //현재 기준의 년도와 달로 다시 이동하는 버튼 기능
 
-//popUp창의 x버튼을 누를시 popUp창 사라짐
-const popUpBtn = document.querySelector("#popUp img");
 popUpBtn.addEventListener('click',()=>{
   document.querySelector("#popUp").style.display = "none";
-})
-//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-
-makeCalendar();
+}) //popUp창의 x버튼을 누를시 popUp창 사라짐
