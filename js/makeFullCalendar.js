@@ -5,21 +5,22 @@ const yearArea = document.querySelector("#year");
 const nextMonthBtns = document.querySelector("#nextMonth");
 const previousMonthBtns = document.querySelector("#previousMonth");
 const inputFullDate = document.querySelector('#inputFullDate');
-const inputs = inputFullDate.querySelectorAll('input');
 const inputBtn = inputFullDate.querySelector('button');
+const inputs = inputFullDate.querySelectorAll('input');
 const inputYear = inputs[0];
 const inputMonth = inputs[1];
 const backToNow = document.querySelector("#backToNow");
 const backToNowBtn = backToNow.querySelector("button");
 const popUp = document.querySelector('#popUp');
 const popUpBtn = document.querySelector("#popUp img");
-const thirtyMonth = [4,6,9,11];
-const thirtyArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
+
+const thirtyMonth = [4,6,9,11]; //30일이 마지막인 month
+const thirtyArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]; 
 const thirtyOneArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31];
 let addYear = 0; //year값 변동을 위해 추가되는 값
 let addMonth = 0; //month값 변동을 위해 추가되는 값
-let addMonthForInputExist = 0;
-let addYearForInputExist = 0;
+let addMonthForInputExist = 0; //날짜가 입력되었을시 그후 변동을 위해 추가되는 값
+let addYearForInputExist = 0; //날짜가 입력되었을시 그후 변동을 위해 추가되는 값
 let isItThirty = false; //thirtyDayToggler에 쓰일 값
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@단독 function들 리스트 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -130,8 +131,8 @@ function checkToday(inputYear, inputMonth, dateObject){
 function makeCalendar(){
   reset(); //만들기전에 reset 함수실행
 
-  let today2 = new Date();//오늘날짜를 표시하기 위한 today2이름의 Date객체
-  let today = new Date(); //달력설정을 위해 쓰일 today이름의 Date객체 
+  const today2 = new Date();//오늘날짜를 표시하기 위한 today2이름의 Date객체
+  const today = new Date(); //달력설정을 위해 쓰일 today이름의 Date객체 
   let year = today.getFullYear()+addYear; //나중에 year값이 변할 수 있도록 addYear값 추가한 
   let month = today.getMonth()+addMonth; //나중에 month값이 변할 수 있도록 addMonth값 추가
 
@@ -157,12 +158,12 @@ function makeCalendarWhenInputExist(){
   if((inputYear.value-'0')!==Number(inputYear.value)||(inputMonth.value-'0')!==Number(inputMonth.value)){
     alert("숫자를 입력해주세요");
     return;
-  }
+  } //입력값들 중 숫자가 아닌 값이 존재할 시 return하고 alert
 
   reset();
   
-  let today2 = new Date();//오늘 날짜를 표시하기 위한 today3이름의 Date객체
-  let today = new Date();
+  const today2 = new Date();//오늘 날짜를 표시하기 위한 today3이름의 Date객체
+  const today = new Date();
   let year = Number(inputYear.value) + addYearForInputExist;
   let month = Number(inputMonth.value) + addMonthForInputExist -1;
     
