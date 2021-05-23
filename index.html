@@ -14,14 +14,15 @@
       <div id="xBtn"><img src="./images/xbutton.png"/></div>
       <div id="popUpMonthAndDay"></div>
       <div id="popUpContainer">
-        <span id="income">수입 : <input type = "text"/></span><br>
-        <span id="expenditure">지출 : <input type = "text"/></span><br>
+        <span id="income">수입 : <input type = "text"/></span><button id="incomeBtn">입력</button><br>
+        <span id="expenditure">지출 : <input type = "text"/></span><button id = "expenditureBtn">입력</button><br>
       </div>
     </div>
     <div id="mainContainer">
       <div id="calendarContainer">
         <div id="year"></div>
         <div id="month">1월</div>
+        <div id="incomeAndExpenditure"><p>수입 : </p><p>지출 : </p><p>잔액 : </p></div>
         <div id = "calendarAndButtons">
           <div id ="button1">
             <button id="previousMonth"><img src = "./images/button.png"/></button>
@@ -104,6 +105,7 @@
           <button>현재로 돌아가기</button>
         </div>
         <script src="./js/makeFullCalendar.js"></script>
+        <script src="js/popup.js"></script>
       </div>
     </div>
   </body>
